@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">FragmentDemo</string>
+    <string name="shopping">shopping</string>
+    <string name="story_tab">story</string>
+    <string name="fragment_1">fragment1</string>
+
+</resources>
