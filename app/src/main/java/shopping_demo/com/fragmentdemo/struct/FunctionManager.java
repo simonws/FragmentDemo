@@ -19,9 +19,11 @@ public class FunctionManager {
 
     private FunctionManager() {
         mFunctionNoParamNoResultMap = new HashMap<>();
+        mFunctionWithParamNoResultMap = new HashMap<>();
     }
 
-    Map<String, FunctionNoParamNoResult> mFunctionNoParamNoResultMap;
+    private Map<String, FunctionNoParamNoResult> mFunctionNoParamNoResultMap;
+    private Map<String, FunctionWithParamNoResult> mFunctionWithParamNoResultMap;
 
 
     public FunctionManager addFunction(FunctionNoParamNoResult functionNoParamNoResult) {
@@ -31,7 +33,19 @@ public class FunctionManager {
         return this;
     }
 
-    public void invokeFunction(String name) {
+    public FunctionManager addFunction(FunctionWithParamNoResult functionNoParamNoResult) {
+        if (!TextUtils.isEmpty(functionNoParamNoResult.mFunctionName)) {
+            mFunctionWithParamNoResultMap.put(functionNoParamNoResult.mFunctionName, functionNoParamNoResult);
+        }
+        return this;
+    }
+
+    public void invokeNNFun(String name) {
         mFunctionNoParamNoResultMap.get(name).invoke();
     }
+
+    public <T> void invokeParamNoResultFun(String name, T param) {
+        mFunctionWithParamNoResultMap.get(name).invoke(param);
+    }
+
 }

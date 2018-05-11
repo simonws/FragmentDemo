@@ -5,12 +5,10 @@ package shopping_demo.com.fragmentdemo.struct;
  */
 
 public abstract class FunctionWithParamNoResult<Param> extends Function {
-    private Param mParam;
 
-    public FunctionWithParamNoResult(String name, Param param) {
+    public FunctionWithParamNoResult(String name) {
         super(name);
-        mParam = param;
     }
 
-    abstract void invoke();
+    public abstract void invoke(Param param);
 }

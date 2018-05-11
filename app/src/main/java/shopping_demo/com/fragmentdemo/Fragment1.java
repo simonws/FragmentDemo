@@ -10,7 +10,8 @@ import android.view.ViewGroup;
  */
 public class Fragment1 extends BaseFragment {
     private static final String TAG = "Fragment1";
-    public static String INTERFACE_NAME = Fragment1.class.getName() + "nn";
+    public static String INTERFACE_NN_NAME = Fragment1.class.getName() + "nn";
+    public static String INTERFACE_NY_NAME = Fragment1.class.getName() + "ny";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -19,7 +20,7 @@ public class Fragment1 extends BaseFragment {
         viewGroup.findViewById(R.id.fragment_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                functionanager.invokeFunction(INTERFACE_NAME);
+                functionanager.invokeParamNoResultFun(INTERFACE_NY_NAME, "hhhhhhhhhhhh");
             }
         });
 

@@ -16,6 +16,7 @@ import java.util.List;
 
 import shopping_demo.com.fragmentdemo.struct.FunctionManager;
 import shopping_demo.com.fragmentdemo.struct.FunctionNoParamNoResult;
+import shopping_demo.com.fragmentdemo.struct.FunctionWithParamNoResult;
 
 /**
  * Created by ws on 17-9-20.
@@ -49,14 +50,7 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         mLeftRadioBtn.setTag(RECEIVE_MSG_TAG);
         mRightRadioBtn = (RadioButton) findViewById(R.id.right_tab_btn);
         mRightRadioBtn.setTag(SEND_MSG_TAG);
-        mFragmentList = new ArrayList<Fragment>(2);
-        Fragment1 receiveStoryMsgFragment = (Fragment1) Fragment
-            .instantiate(this, mFragmentClassesArray[0], null);
-
-        Fragment2 sendStoryMsgFragment = (Fragment2) Fragment
-            .instantiate(this, mFragmentClassesArray[1], null);
-        mFragmentList.add(receiveStoryMsgFragment);
-        mFragmentList.add(sendStoryMsgFragment);
+        initFragment();
 
         mTabBarRadio = (RadioGroup) findViewById(R.id.tab_radio);
         mViewPager = ((ViewPager) findViewById(R.id.view_pager));
@@ -73,6 +67,20 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
         });
 
         mTabBarRadio.setOnCheckedChangeListener(this);
+    }
+
+    private void initFragment() {
+        mFragmentList = new ArrayList<Fragment>(2);
+        initFunctionManager();
+        Fragment1 receiveStoryMsgFragment = (Fragment1) Fragment
+            .instantiate(this, mFragmentClassesArray[0], null);
+        receiveStoryMsgFragment.setFunctionManager(FunctionManager.getsInstance());
+
+        Fragment2 sendStoryMsgFragment = (Fragment2) Fragment
+            .instantiate(this, mFragmentClassesArray[1], null);
+        sendStoryMsgFragment.setFunctionManager(FunctionManager.getsInstance());
+        mFragmentList.add(receiveStoryMsgFragment);
+        mFragmentList.add(sendStoryMsgFragment);
     }
 
 
@@ -104,16 +112,19 @@ public class MainActivity extends FragmentActivity implements RadioGroup.OnCheck
     }
 
 
-    public void setFunction(String tag) {
-        FragmentManager fm = getSupportFragmentManager();
-        BaseFragment fragment = (BaseFragment) fm.findFragmentByTag(tag);
+    public void initFunctionManager() {
         FunctionManager functionManager = FunctionManager.getsInstance();
-        fragment.setFunctionManager(functionManager.addFunction(new FunctionNoParamNoResult(Fragment1.INTERFACE_NAME) {
+        functionManager.addFunction(new FunctionNoParamNoResult(Fragment1.INTERFACE_NN_NAME) {
             @Override
             public void invoke() {
                 Toast.makeText(MainActivity.this, "无参数接口执行", Toast.LENGTH_SHORT).show();
             }
-        }));
+        }).addFunction(new FunctionWithParamNoResult<String>(Fragment1.INTERFACE_NY_NAME) {
 
+            @Override
+            public void invoke(String s) {
+                Toast.makeText(MainActivity.this, s, Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }
